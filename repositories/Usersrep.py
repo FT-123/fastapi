@@ -1,6 +1,6 @@
 from typing import List
 
-
+from uuid import UUID
 from fastapi.params import Depends
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
@@ -14,9 +14,9 @@ class UserRepository:
     def __init__(self, db: Session = Depends(get_db)):
         self.db = db
 
-    def find(self, id: int) -> User:
+    def find(self, uuid: UUID) -> User:
         query = self.db.query(User)
-        return query.filter(User.id == id).first()
+        return query.filter(User.id == uuid).first()
 
     def find_by_email(self, email: EmailStr):
         query = self.db.query(User)

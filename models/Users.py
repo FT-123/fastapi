@@ -1,12 +1,14 @@
 from sqlalchemy import Column, String, Integer
 from . import hashing
 from database import Model
+from uuid import uuid4
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class User(Model):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     password = Column(String)
