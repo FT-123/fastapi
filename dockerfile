@@ -5,12 +5,11 @@ FROM python:3.10
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /./
+WORKDIR /code/
 
 # Install dependencies
 RUN pip install pipenv
-RUN pipenv install --system --dev
 
-COPY /./
+COPY . /code/
 
 EXPOSE 8000
