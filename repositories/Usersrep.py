@@ -1,5 +1,5 @@
 from typing import List
-from uuid import UUID
+
 
 from fastapi.params import Depends
 from pydantic import EmailStr
