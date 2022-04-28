@@ -22,6 +22,10 @@ class UserRepository:
         query = self.db.query(User)
         return query.filter(User.email == email).first()
 
+    def find_by_name(self, username: str):
+        query = self.db.query(User)
+        return query.filter(User.name == username).first()
+
     def all(self, skip: int = 0, max: int = 100) -> List[User]:
         query = self.db.query(User)
         return query.offset(skip).limit(max).all()
