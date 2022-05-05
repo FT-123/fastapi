@@ -5,9 +5,9 @@ from fastapi.params import Depends
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
-from models.Users import User
+from Users.UsersModel import User
 from dependencies import get_db
-from schemas.Usersschem import UserCreate
+from Users.Usersschem import UserCreate
 
 
 class UserRepository:

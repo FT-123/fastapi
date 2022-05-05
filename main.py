@@ -1,7 +1,7 @@
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 import auth.router
 from database import Model, engine
-from routers import Usersrout
+from Users import Usersrout
 import uvicorn
 
 
