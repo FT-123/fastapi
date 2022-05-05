@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from User.UsersModels import User
 from dependencies import get_db
-from schemas.Usersschem import UserCreate
+from User.Usersschem import UserCreate
 
 
 class UserRepository:
