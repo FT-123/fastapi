@@ -13,7 +13,7 @@ services:
     build: .
     command: uvicorn main:app --reload
     volumes:
-      - .:/usr/src/ww2
+      - .:/usr/src/ww1
     ports:
       - 8004:8004
     environment:

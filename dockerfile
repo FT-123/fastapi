@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/ww1
 
 RUN pip install pipenv
-COPY Pipfile Pipfile.lock /usr/src/ww1
+COPY Pipfile Pipfile.lock /usr/src/ww1/
 RUN pip install psycopg2-binary
 RUN pipenv install --system --dev
 
