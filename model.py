@@ -46,12 +46,12 @@ class Comment(Model):
 
     __tablename__ = "comments"
 
-    id = Column(Integer,primary_key=True)
-    created_date = Column(DateTime,default=datetime.datetime.utcnow)
-    is_active = Column(Boolean,default=True)
+    id = Column(Integer, primary_key=True)
+    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    is_active = Column(Boolean, default=True)
     name = Column(String, ForeignKey("users.name"), nullable=False)
-    body= Column(String)
-    post_id = Column(Integer, ForeignKey("photos.id"), nullable=False)
-    post_related = relationship("Photo", back_populates="post_comment", foreign_keys=[post_id])
+    body = Column(String)
+    photo_id = Column(Integer, ForeignKey("photos.id"), nullable=False)
+    post_related = relationship("Photo", back_populates="post_comment", foreign_keys=[photo_id])
     userowner = relationship("User", back_populates="usercomment", foreign_keys=[name])
     

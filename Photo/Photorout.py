@@ -1,7 +1,6 @@
 import os
 from .Photorep import create_posts, all, get_post, delete_photo, verify_photo
 import model
-from sqlalchemy import  select
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
@@ -14,7 +13,7 @@ import shutil
 router = APIRouter(prefix="/Photo", tags=["photos"])
 
 
-@router.post("/api/photos/",status_code=status.HTTP_201_CREATED)
+@router.post("/api/photos/", status_code=status.HTTP_201_CREATED)
 def create_photo(
     title: str, body: str, file: UploadFile = File(...), db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user)

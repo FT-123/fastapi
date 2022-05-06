@@ -12,7 +12,7 @@ class CommentBase(BaseModel):
 class CommentList(CommentBase):
     id: int
     name: str
-    post_id: int
+    photo_id: int
     created_date: Optional[datetime.datetime] = Body(None)
 
 

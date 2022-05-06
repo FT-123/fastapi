@@ -1,8 +1,6 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
-from fastapi import HTTPException, Depends
-from auth.jwt import get_current_user
-from model import Photo, User
+from fastapi import HTTPException
+from model import Photo
 from typing import List
 
 
