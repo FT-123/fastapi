@@ -47,10 +47,11 @@ def photo_list(db: Session = Depends(get_db), current_user: model.User = Depends
 def photo_delete(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     dele = delete_photo(db=db, id=post_id)
     user_name = current_user.name
-    photo = get_post(db=db, id=post_id)
-    owner_name = photo.owner_name
-    if owner_name == user_name:
-        return dele
-    else:
+    photo_owner = get_post(db=db, id=post_id)
+    owner = photo_owner
+    if not owner == user_name:
         raise HTTPException(status_code=404, detail="unauthorized")
+    return dele
+
+
 
