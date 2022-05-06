@@ -1,4 +1,8 @@
-from sqlalchemy import Column, String, Integer
+
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String,DateTime
+from sqlalchemy.orm import relationship
+from sqlalchemy_utils import EmailType, URLType
+import datetime
 from auth import hashing
 from database import Model
 from uuid import uuid4
@@ -12,6 +16,7 @@ class User(Model):
     name = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     password = Column(String)
+    post = relationship("Photo", back_populates="owner")
 
     def __init__(self, name, email, password, *args, **kwargs):
         self.name = name
@@ -23,12 +28,17 @@ class User(Model):
 
 
 class Photo(Model):
-    __tablename__ = "Photos"
+    __tablename__ = "photos"
 
-    id = Column(Integer, primary_key=True, index=True)
-    photo_file = Column(String, unique=True, index=True)
-    photo_dis = Column(String)
-    photo_owner = Column(String, unique=True, index=True)
+    id = Column(Integer, primary_key=True)
+    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    is_active = Column(Boolean, default=True)
+    title = Column(String)
+    url = Column(URLType)
+    body = Column(String)
+    owner_name = Column(String, ForeignKey("users.name"), nullable=False)
+    owner = relationship("User", back_populates="post", foreign_keys=[owner_name])
+
 
 
 class Comments(Model):
