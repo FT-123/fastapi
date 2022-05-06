@@ -1,6 +1,5 @@
 from functools import lru_cache
 from sqlalchemy.orm import Session
-import config
 import database
 
 
@@ -12,6 +11,3 @@ def get_db() -> Session:
         db.close()
 
 
-@lru_cache
-def get_db_settings() -> config.DBSettings:
-    return config.DBSettings()

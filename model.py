@@ -17,6 +17,7 @@ class User(Model):
     email = Column(String, unique=True, index=True)
     password = Column(String)
     post = relationship("Photo", back_populates="owner")
+    usercomment = relationship("Comment", back_populates="userowner")
 
     def __init__(self, name, email, password, *args, **kwargs):
         self.name = name
@@ -38,13 +39,19 @@ class Photo(Model):
     body = Column(String)
     owner_name = Column(String, ForeignKey("users.name"), nullable=False)
     owner = relationship("User", back_populates="post", foreign_keys=[owner_name])
+    post_comment = relationship("Comment", back_populates="post_related")
 
 
+class Comment(Model):
 
-class Comments(Model):
-    __tablename__ = "Comments"
+    __tablename__ = "comments"
 
-    id = Column(Integer, primary_key=True, index=True)
-    comment = Column(String)
-    comment_owner = Column(String, unique=True, index=True)
-    Photo_owner = Column(String, unique=True, index=True)
+    id = Column(Integer,primary_key=True)
+    created_date = Column(DateTime,default=datetime.datetime.utcnow)
+    is_active = Column(Boolean,default=True)
+    name = Column(String, ForeignKey("users.name"), nullable=False)
+    body= Column(String)
+    post_id = Column(Integer, ForeignKey("photos.id"), nullable=False)
+    post_related = relationship("Photo", back_populates="post_comment", foreign_keys=[post_id])
+    userowner = relationship("User", back_populates="usercomment", foreign_keys=[name])
+    
