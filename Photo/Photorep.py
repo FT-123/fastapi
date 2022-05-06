@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
-from model import Photo
+from sqlalchemy import select
+from fastapi import HTTPException, Depends
+from auth.jwt import get_current_user
+from model import Photo, User
 from typing import List
 
 
@@ -12,14 +14,19 @@ def create_posts(db: Session, name:str, title:str, body:str, url:str):
     return db_post
 
 
-def get_post(self, id: int):
-    query = self.db.query(Photo)
-    return query(Photo).filter(Photo.id == id).first()
+def get_post(db: Session, id: int):
+    query = db.query(Photo)
+    return query.filter(Photo.id == id).first()
 
 
 def all(db: Session, skip: int = 0, max: int = 100) -> List[Photo]:
     query = db.query(Photo)
     return query.offset(skip).limit(max).all()
+
+
+def get_user_by_photo_id(db: Session, id: int):
+    query = db.query(Photo)
+    return query.select(Photo.owner_name).where(Photo.id == id).first()
 
 
 def delete_photo(id: int, db: Session):

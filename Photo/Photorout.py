@@ -1,6 +1,7 @@
 import os
-from .Photorep import create_posts, all, get_post, delete_photo
+from .Photorep import create_posts, all, get_post, delete_photo, get_user_by_photo_id
 import model
+from sqlalchemy import  select
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
@@ -15,7 +16,7 @@ router = APIRouter(prefix="/Photo", tags=["photos"])
 
 @router.post("/api/photos/",status_code=status.HTTP_201_CREATED)
 def create_photo(
-    title:str, body:str, file: UploadFile = File(...), db: Session = Depends(get_db),
+    title: str, body: str, file: UploadFile = File(...), db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user)
 ):
     with open(f'image/{file.filename}', "wb") as buffer:
@@ -47,11 +48,13 @@ def photo_list(db: Session = Depends(get_db), current_user: model.User = Depends
 def photo_delete(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     dele = delete_photo(db=db, id=post_id)
     user_name = current_user.name
-    photo_owner = get_post(db=db, id=post_id)
-    owner = photo_owner
-    if not owner == user_name:
+    if not stmt == user_name:
         raise HTTPException(status_code=404, detail="unauthorized")
     return dele
 
+@router.get("///")
+def photo_user_by_id(photo: int, db: Session = Depends(get_db)):
+    find = get_user_by_photo_id(db=db, id=photo)
+    return find
 
 
