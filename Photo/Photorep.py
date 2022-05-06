@@ -24,15 +24,18 @@ def all(db: Session, skip: int = 0, max: int = 100) -> List[Photo]:
     return query.offset(skip).limit(max).all()
 
 
-def get_user_by_photo_id(db: Session, id: int):
+def verify_photo(db: Session, id: int, username: str):
     query = db.query(Photo)
-    return query.select(Photo.owner_name).where(Photo.id == id).first()
+    find = query.filter(Photo.id == id).where(Photo.owner_name == username).first()
+    if not find:
+        raise HTTPException(status_code=404, detail="unauthorized")
+    return find
 
 
 def delete_photo(id: int, db: Session):
     de = db.get(Photo, id)
     if not de:
-        raise HTTPException(status_code=404, detail="Photo not found")
+        raise HTTPException(status_code=404, detail="unauthorized")
     db.delete(de)
     db.commit()
     return {"ok": True}
