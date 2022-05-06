@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import parse_obj_as
-from typing import List
 import model
 import User.Usersschem
-from User.Usersschem import User, UserCreate, UserBase
+from User.Usersschem import User, UserCreate
 from User.Usersrep import UserRepository
 from auth.jwt import get_current_user
 
