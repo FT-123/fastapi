@@ -44,6 +44,13 @@ def photo_list(db: Session = Depends(get_db), current_user: model.User = Depends
     return all(db=db)
 
 @router.delete("/api/photos/[PHOTO_ID]/")
-def photo_delete(post_id: int, db: Session = Depends(get_db)):
+def photo_delete(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     dele = delete_photo(db=db, id=post_id)
-    return dele
+    user_name = current_user.name
+    photo = get_post(db=db, id=post_id)
+    owner_name = photo.owner_name
+    if owner_name == user_name:
+        return dele
+    else:
+        raise HTTPException(status_code=404, detail="unauthorized")
+
