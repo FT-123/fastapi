@@ -11,7 +11,7 @@ import model
 router = APIRouter(prefix="/Photo", tags=["photos"])
 
 
-@router.post("/posts/{post_id}/comment", response_model=CommentList)
+@router.post("/api/photos/comment/?photo_id=[PHOTO_ID]", response_model=CommentList)
 def create_comments(
         comment: CommentBase, post_id: int, db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user)):

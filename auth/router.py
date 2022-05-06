@@ -10,7 +10,7 @@ import dependencies
 
 router = APIRouter(tags=["auth"])
 
-@router.post('/login')
+@router.post('/api/login/')
 def login(request: OAuth2PasswordRequestForm = Depends(), database: Session = Depends(dependencies.get_db)):
     user = database.query(User).filter(User.name == request.username).first()
     if not user:

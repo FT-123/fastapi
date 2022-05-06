@@ -13,7 +13,7 @@ import shutil
 router = APIRouter(prefix="/Photo", tags=["photos"])
 
 
-@router.post("/posts/",status_code=status.HTTP_201_CREATED)
+@router.post("/api/photos/",status_code=status.HTTP_201_CREATED)
 def create_post(
     title:str, body:str, file: UploadFile = File(...), db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user)
@@ -27,7 +27,7 @@ def create_post(
     return create_posts(db=db, name=user_name, title=title, body=body, url=url)
 
 
-@router.get("/posts/{post_id}")
+@router.get("/api/photos/[PHOTO_ID]")
 def post_detail(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     post = get_post(db=db, id=post_id)
 
@@ -38,3 +38,7 @@ def post_detail(post_id: int, db: Session = Depends(get_db), current_user: model
     if post is None:
         raise HTTPException(status_code=404, detail="post does not exist")
     return {"post": post, "active_comment": active_comment}
+
+@router.get("/api/photos/")
+def post_list(db: Session = Depends(get_db)):
+    return post_list(db=db)

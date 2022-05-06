@@ -15,4 +15,4 @@ def get_post(db, id: int):
 
 
 def post_list(db):
-    return db.query(Photo).all()
+    return db.query(Photo).filter(Photo.id == id).first()
