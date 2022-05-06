@@ -13,7 +13,7 @@ services:
     build: .
     command: uvicorn main:app --reload
     volumes:
-      - .:/usr/src/ww1
+      - .:/usr/src/fastapi
     ports:
       - 8004:8004
     environment:

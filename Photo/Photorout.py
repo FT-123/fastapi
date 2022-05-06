@@ -1,5 +1,5 @@
 import os
-from .Photorep import create_posts, all, get_post
+from .Photorep import create_posts, all, get_post, delete_photo
 import model
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
@@ -42,3 +42,8 @@ def photo_detail(post_id: int, db: Session = Depends(get_db), current_user: mode
 @router.get("/api/photos/")
 def photo_list(db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     return all(db=db)
+
+@router.delete("/api/photos/[PHOTO_ID]/")
+def photo_delete(post_id: int, db: Session = Depends(get_db)):
+    dele = delete_photo(db=db, id=post_id)
+    return dele
