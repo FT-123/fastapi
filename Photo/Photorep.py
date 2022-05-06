@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from model import Photo
+from typing import List
 
 
 def create_posts(db: Session, name:str, title:str, body:str, url:str):
@@ -10,9 +11,15 @@ def create_posts(db: Session, name:str, title:str, body:str, url:str):
     return db_post
 
 
-def get_post(db, id: int):
-    return db.query(Photo).filter(Photo.id == id).first()
+def get_post(self, id: int):
+    query = self.db.query(Photo)
+    return query(Photo).filter(Photo.id == id).first()
 
 
-def post_list(db):
-    return db.query(Photo).filter(Photo.id == id).first()
+def all(db: Session, skip: int = 0, max: int = 100) -> List[Photo]:
+    query = db.query(Photo)
+    return query.offset(skip).limit(max).all()
+
+
+
+

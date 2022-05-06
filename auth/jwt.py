@@ -30,7 +30,7 @@ def verify_token(token: str, credentials_exception):
         raise credentials_exception
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login/")
 
 
 def get_current_user(data: str = Depends(oauth2_scheme)):

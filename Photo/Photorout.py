@@ -1,11 +1,11 @@
 import os
-from .Photorep import create_posts, post_list, get_post
+from .Photorep import create_posts, all, get_post
 import model
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 from auth.jwt import get_current_user
-from User.Usersschem import UserBase
+
 
 import shutil
 
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/Photo", tags=["photos"])
 
 
 @router.post("/api/photos/",status_code=status.HTTP_201_CREATED)
-def create_post(
+def create_photo(
     title:str, body:str, file: UploadFile = File(...), db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user)
 ):
@@ -28,7 +28,7 @@ def create_post(
 
 
 @router.get("/api/photos/[PHOTO_ID]")
-def post_detail(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
+def photo_detail(post_id: int, db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
     post = get_post(db=db, id=post_id)
 
     comment = db.query(model.Comment).filter(model.Comment.post_id == post_id)
@@ -40,5 +40,5 @@ def post_detail(post_id: int, db: Session = Depends(get_db), current_user: model
     return {"post": post, "active_comment": active_comment}
 
 @router.get("/api/photos/")
-def post_list(db: Session = Depends(get_db)):
-    return post_list(db=db)
+def photo_list(db: Session = Depends(get_db), current_user: model.User = Depends(get_current_user)):
+    return all(db=db)
