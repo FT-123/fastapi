@@ -1,6 +1,6 @@
 ## Что заменить
-    Задать свои параметры базы данных в ".env" и "docker-compose"
+    Задать свои параметры базы данных в ".env", "database' и "docker-compose"
 
-## Создать авто миграции
+## Запуск
 
-    alembic revision --autogenerate -m "Added account table"
+    Запустить "docker-compose" 
