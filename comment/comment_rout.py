@@ -1,14 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from .Commentrep import CommentRepository
-from Photo.Photorep import PhotoRepository
-from .Commentschem import CommentBase, CommentList
-from dependencies import get_db
-from auth.jwt import get_current_user
+from .comment_rep import CommentRepository
+from photo.photo_rep import PhotoRepository
+from .comment_schem import CommentBase, CommentList
+from user.jwt import get_current_user
 import model
 
 
-router = APIRouter(prefix="/Comment", tags=["comments"])
+router = APIRouter(prefix="/comment", tags=["comments"])
 
 
 @router.post("/api/photos/{photo_id}/comment", response_model=CommentList)
@@ -18,7 +16,7 @@ def create_comments(
     user_name = current_user.name
     photo_have = photos.get_post(id=photo_id)
     if not photo_have:
-        raise HTTPException(status_code=404, detail="Photo not found")
+        raise HTTPException(status_code=404, detail="photo not found")
     return comments.create_comment(photo_id=photo_id, name=user_name, comment=comment)
 
 

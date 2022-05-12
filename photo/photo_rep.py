@@ -39,5 +39,3 @@ class PhotoRepository:
         self.db.delete(de)
         self.db.commit()
         return {"ok": True}
-
-

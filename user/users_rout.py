@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 import model
-import User.Usersschem
-from User.Usersschem import User, UserCreate
-from User.Usersrep import UserRepository
-from auth.jwt import get_current_user
-
+import user.users_schem
+from user.users_schem import User, UserCreate
+from user.users_rep import UserRepository
+from user.jwt import get_current_user
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -24,7 +23,7 @@ def createuser(user: UserCreate, users: UserRepository = Depends()):
             detail="Username already registered"
         )
     db_user = users.create(user)
-    return User.from_orm(db_user)
+    return user.from_orm(db_user)
 
 
 @router.get("/api/user/", response_model=User)
@@ -32,5 +31,3 @@ def cur_user(users: UserRepository = Depends(), current_user: model.User = Depen
     curret_name = current_user.name
     user_name = users.find_by_name(username=curret_name)
     return user_name
-
-

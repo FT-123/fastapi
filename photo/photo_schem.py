@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 import datetime
-from User.Usersschem import UserBase
+from user.users_schem import UserBase
 
 
 class PostBase(BaseModel):
@@ -15,4 +15,4 @@ class PostList(PostBase):
     owner: UserBase.name
 
     class Config:
-        orm_mode=True
+        orm_mode = True

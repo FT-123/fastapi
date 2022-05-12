@@ -1,6 +1,5 @@
 from passlib.context import CryptContext
 
-
 pwd_contex = CryptContext(schemes=["argon2"], deprecated="auto")
 
 

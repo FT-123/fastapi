@@ -1,9 +1,8 @@
-
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String,DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
-from sqlalchemy_utils import EmailType, URLType
+from sqlalchemy_utils import URLType
 import datetime
-from auth import hashing
+from user import hashing
 from database import Model
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
@@ -16,8 +15,8 @@ class User(Model):
     name = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     password = Column(String)
-    post = relationship("Photo", back_populates="owner")
-    usercomment = relationship("Comment", back_populates="userowner")
+    post = relationship("photo", back_populates="owner")
+    usercomment = relationship("comment", back_populates="userowner")
 
     def __init__(self, name, email, password, *args, **kwargs):
         self.name = name
@@ -38,12 +37,11 @@ class Photo(Model):
     url = Column(URLType)
     body = Column(String)
     owner_name = Column(String, ForeignKey("users.name"), nullable=False)
-    owner = relationship("User", back_populates="post", foreign_keys=[owner_name])
-    post_comment = relationship("Comment", back_populates="post_related")
+    owner = relationship("user", back_populates="post", foreign_keys=[owner_name])
+    post_comment = relationship("comment", back_populates="post_related")
 
 
 class Comment(Model):
-
     __tablename__ = "comments"
 
     id = Column(Integer, primary_key=True)
@@ -52,6 +50,5 @@ class Comment(Model):
     name = Column(String, ForeignKey("users.name"), nullable=False)
     body = Column(String)
     photo_id = Column(Integer, ForeignKey("photos.id"), nullable=False)
-    post_related = relationship("Photo", back_populates="post_comment", foreign_keys=[photo_id])
-    userowner = relationship("User", back_populates="usercomment", foreign_keys=[name])
-    
+    post_related = relationship("photo", back_populates="post_comment", foreign_keys=[photo_id])
+    userowner = relationship("user", back_populates="usercomment", foreign_keys=[name])

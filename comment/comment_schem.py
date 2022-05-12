@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from fastapi import Body
-from User.Usersschem import UserBase
+from user.users_schem import UserBase
 import datetime
 
 

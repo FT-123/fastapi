@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .Commentschem import CommentBase
+from .comment_schem import CommentBase
 from fastapi import HTTPException, Depends
 from dependencies import get_db
 from model import Comment

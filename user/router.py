@@ -7,8 +7,8 @@ from . import hashing
 from .jwt import create_access_token
 import dependencies
 
-
 router = APIRouter(tags=["auth"])
+
 
 @router.post('/api/login/')
 def login(request: OAuth2PasswordRequestForm = Depends(), database: Session = Depends(dependencies.get_db)):

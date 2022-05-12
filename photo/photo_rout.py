@@ -1,28 +1,26 @@
 import os
-from .Photorep import PhotoRepository
+from .photo_rep import PhotoRepository
 import model
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
-from auth.jwt import get_current_user
-
+from user.jwt import get_current_user
 
 import shutil
 
-
-router = APIRouter(prefix="/Photo", tags=["photos"])
+router = APIRouter(prefix="/photo", tags=["photos"])
 
 
 @router.post("/api/photos/", status_code=status.HTTP_201_CREATED)
 def create_photo(
-    title: str, body: str, file: UploadFile = File(...), db: Session = Depends(get_db),
+        title: str, body: str, file: UploadFile = File(...), db: Session = Depends(get_db),
         current_user: model.User = Depends(get_current_user), photos: PhotoRepository = Depends()
 ):
     with open(f'image/{file.filename}', "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     user_name = current_user.name
 
-    url = os.getcwd()+"/image/"+file.filename
+    url = os.getcwd() + "/image/" + file.filename
 
     return photos.create_posts(name=user_name, title=title, body=body, url=url)
 
@@ -40,9 +38,11 @@ def photo_detail(post_id: int, db: Session = Depends(get_db), current_user: mode
         raise HTTPException(status_code=404, detail="post does not exist")
     return {"post": post, "active_comment": active_comment}
 
+
 @router.get("/api/photos/")
 def photo_list(photos: PhotoRepository = Depends(), current_user: model.User = Depends(get_current_user)):
     return photos.all()
+
 
 @router.delete("/api/photos/[PHOTO_ID]/")
 def photo_delete(post_id: int, current_user: model.User = Depends(get_current_user),
@@ -54,7 +54,3 @@ def photo_delete(post_id: int, current_user: model.User = Depends(get_current_us
         raise HTTPException(status_code=404, detail="unauthorized")
     dele = photos.delete_photo(id=post_id)
     return dele
-
-
-
-
