@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2277
+      - POSTGRES_DB=postgres
+  web:
+    restart: always
+    build: .
+    command: uvicorn main:app --reload --port 8004 --host 0.0.0.0
+    volumes:
+      - .:/usr/src/fastapi
+    ports:
+      - 8004:8004
+    environment:
+      - .env
+    depends_on:
+      - db
+
