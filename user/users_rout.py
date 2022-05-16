@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-import model
-import user.users_schem
+from user import model
 from user.users_schem import User, UserCreate
 from user.users_rep import UserRepository
 from user.jwt import get_current_user

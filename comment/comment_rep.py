@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from .comment_schem import CommentBase
 from fastapi import HTTPException, Depends
 from dependencies import get_db
-from model import Comment
+from user.model import Comment
 
 
 class CommentRepository:

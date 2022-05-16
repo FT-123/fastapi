@@ -3,8 +3,7 @@ from .comment_rep import CommentRepository
 from photo.photo_rep import PhotoRepository
 from .comment_schem import CommentBase, CommentList
 from user.jwt import get_current_user
-import model
-
+from user import model
 
 router = APIRouter(prefix="/comment", tags=["comments"])
 

@@ -10,7 +10,6 @@ from sqlalchemy.dialects.postgresql import UUID
 
 class User(Model):
     __tablename__ = "users"
-
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
@@ -18,7 +17,7 @@ class User(Model):
     post = relationship("photo", back_populates="owner")
     usercomment = relationship("comment", back_populates="userowner")
 
-    def __init__(self, name, email, password, *args, **kwargs):
+    def __init__(self, name, email, password):
         self.name = name
         self.email = email
         self.password = hashing.get_password_hash(password)

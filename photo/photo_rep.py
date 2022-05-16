@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from fastapi.params import Depends
-from model import Photo
+from user.model import Photo
 from typing import List
 from dependencies import get_db
 

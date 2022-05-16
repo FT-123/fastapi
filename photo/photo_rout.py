@@ -1,6 +1,6 @@
 import os
 from .photo_rep import PhotoRepository
-import model
+from user import model
 from dependencies import get_db
 from fastapi import APIRouter, Depends, status, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session

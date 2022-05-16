@@ -1,11 +1,9 @@
 from typing import List
-
 from uuid import UUID
 from fastapi.params import Depends
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
-
-from model import User
+from user.model import User
 from dependencies import get_db
 from user.users_schem import UserCreate
 

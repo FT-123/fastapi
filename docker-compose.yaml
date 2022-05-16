@@ -11,7 +11,7 @@ services:
   web:
     restart: always
     build: .
-    command: uvicorn main:app --reload --port 8004 --host 0.0.0.0
+    command: uvicorn main:app --reload --port 8004 --host 0.0.0.0; alembic upgrade head
     volumes:
       - .:/usr/src/fastapi
     ports:
