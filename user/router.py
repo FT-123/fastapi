@@ -7,7 +7,7 @@ from . import hashing
 from .jwt import create_access_token
 import dependencies
 
-router = APIRouter(tags=["auth"])
+router = APIRouter(tags=["users"])
 
 
 @router.post('/api/login/')
